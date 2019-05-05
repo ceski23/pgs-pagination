@@ -1,24 +1,21 @@
 import React from 'react';
-import S from '../styles/SongsList.module.scss';
-import Song from './Song';
 import PropTypes from 'prop-types';
+import S from '../styles/SongsList.module.scss';
+import Song, { propTypes as SongPropType } from './Song';
 
-const SongsList = ({ songs, fullCount }) => {
+const SongsList = ({ songs, fullCount }) => (
+  <React.Fragment>
+    <p className={S.songCount}>Found {fullCount} songs</p>
 
-  return (
-    <React.Fragment>
-      <p className={S.songCount}>Found {fullCount} songs</p>
-
-      <div className={S.songs}>
-        {songs.map((p, i) => <Song data={p} key={i} />)}
-      </div>
-    </React.Fragment>
-  )
-}
+    <div className={S.songs}>
+      {songs.map((p, i) => <Song data={p} key={i} />)}
+    </div>
+  </React.Fragment>
+);
 
 SongsList.propTypes = {
-  songs: PropTypes.array.isRequired,
-  fullCount: PropTypes.number.isRequired
-}
+  songs: PropTypes.arrayOf(SongPropType).isRequired,
+  fullCount: PropTypes.number.isRequired,
+};
 
 export default SongsList;

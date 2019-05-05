@@ -12,7 +12,7 @@ const App = () => {
   const [filter, setFilter] = useState('');
   const perPage = 9;
 
-  const {response, loading, reFetch} = useAxios({
+  const { response, loading, reFetch } = useAxios({
     url: 'https://itunes.apple.com/search',
     method: 'GET',
     options: {
@@ -20,9 +20,9 @@ const App = () => {
       params: {
         term: filter,
         entity: 'song',
-        limit: 200
-      }
-    }
+        limit: 200,
+      },
+    },
   });
 
   const songs = response ? response.data.results : [];
@@ -30,17 +30,17 @@ const App = () => {
   const increaseOffset = () => {
     const n = offset + perPage;
     if (n < songs.length) setOffset(n);
-  }
+  };
 
   const decreaseOffset = () => {
     const n = offset - perPage;
     if (n >= 0) setOffset(n);
-  }
+  };
 
   return (
     <div className={S.app}>
       <div className={S.header}>
-        <img src={logo} alt='PGS Software logo' className={S.logo} />
+        <img src={logo} alt="PGS Software logo" className={S.logo} />
       </div>
 
       <SearchSection setFilter={setFilter} filter={filter} reSearch={reFetch} />
@@ -50,13 +50,14 @@ const App = () => {
           <SongsList songs={songs.slice(offset, offset + perPage)} fullCount={songs.length} />
 
           <div className={S.navigation}>
-            <button onClick={decreaseOffset}>&lt;&lt; prev</button>
-            <button onClick={increaseOffset}>next &gt;&gt;</button>
+            <button onClick={decreaseOffset} type="button">&lt;&lt; prev</button>
+            <button onClick={increaseOffset} type="button">next &gt;&gt;</button>
           </div>
         </React.Fragment>
       ) : (
         <div className={S.status}>
-          {loading ? <p>Loading data...</p> : response ? <p>Sorry, no matches found</p> : null}
+          {loading ? <p>Loading data...</p> : null }
+          {!loading && response ? <p>Sorry, no matches found</p> : null}
         </div>
       )}
 
@@ -64,7 +65,7 @@ const App = () => {
         <p>Powered by PGS</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default App;
